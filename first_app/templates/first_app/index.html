@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Criminal Recognition</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" type="text/css" media="all">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700" type="text/css" media="all">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+</head>
+<body>
+
+    <button type="button" id="startButton" name="button">Start</button>
+    <button type="button" id="stopButton" name="button">Stop</button>
+    <h1>Railway Station</h1>
+
+		<div class="containerw3layouts-agileits">
+
+			<div id="verticalTab" class="resp-vtabs w3-agile" style="display: block; width: 100%; margin: 0px;">
+
+				<ul class="resp-tabs-list agileits-w3layouts">
+					<li class="resp-tab-item"><span>Gents</span></li>
+					<li class="resp-tab-item"><span>Ladies</span></li>
+					<li class="resp-tab-item agileinfo"><span>Disabled</span></li>
+					<li class="resp-tab-item"><span>Enquiry</span></li>
+					<li class="resp-tab-item"><span>Tatkal</span></li>
+				</ul>
+
+				<div class="resp-tabs-container">
+
+					<div class="resp-tab-content">
+						<div class="our-skills">
+							<div class="single-skill">
+								<p class="lead">Queue Length</p>
+								<div class="progress">
+									<div class="progress-bar progress-bar-1"><span id="lengthUpdate">{{ length }}</span></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="resp-tab-content">
+						<div class="our-skills">
+							<div class="single-skill">
+								<p class="lead">Queue Length</p>
+								<div class="progress">
+									<div class="progress-bar progress-bar-1">40</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="resp-tab-content">
+						<div class="our-skills">
+							<div class="single-skill">
+								<p class="lead">Queue Length</p>
+								<div class="progress">
+									<div class="progress-bar progress-bar-1">76</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="resp-tab-content">
+						<div class="our-skills">
+							<div class="single-skill">
+								<p class="lead">Queue Length</p>
+								<div class="progress">
+									<div class="progress-bar progress-bar-1">55</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="resp-tab-content">
+						<div class="our-skills">
+							<div class="single-skill">
+								<p class="lead">Queue Length</p>
+								<div class="progress">
+									<div class="progress-bar progress-bar-1">10</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="clear"></div>
+
+				</div>
+				<div class="clear w3-agile"></div>
+
+			</div>
+
+		</div>
+
+		<div class="w3lsfooteragileits">
+			<p> &copy; 2019 Murli. All Rights Reserved | Design by <a href="http://w3layouts.com" target="=_blank">W3layouts</a></p>
+		</div>
+
+        <!-- Necessary-JavaScript-Files-&-Links -->
+
+			<!-- Tabs-JavaScript -->
+				<script src="{% static 'js/easyResponsiveTabs.js' %}"></script>
+        <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
+				<script type="text/javascript">
+					$(document).ready(function () {
+            a=null;
+            a = setInterval(fetchdata,1000);
+
+						$('#horizontalTab').easyResponsiveTabs({
+							type: 'default',
+							width: 'auto',
+							fit: true,
+							closed: 'accordion',
+							activate: function(event) {
+								var $tab = $(this);
+								var $info = $('#tabInfo');
+								var $name = $('span', $info);
+								$name.text($tab.text());
+								$info.show();
+							}
+						});
+						$('#verticalTab').easyResponsiveTabs({
+							type: 'vertical',
+							width: 'auto',
+							fit: true
+						});
+					});
+
+      function fetchdata(){
+       $.ajax({
+        url: '/update/',
+        type: 'GET',
+        success: function(response){
+         // Perform operation on the return value
+         console.log("getting /update" + response);
+         $("#lengthUpdate").text(response);
+        }
+       });
+      }
+
+      $('#stopButton').click(function(){
+        clearInterval(a);
+        $.ajax({
+         url: '/stop/',
+         type: 'GET',
+         success: function(response){
+          // Perform operation on the return value
+          console.log(response);
+         }
+        });
+      });
+
+      $('#startButton').click(function(){
+        $.ajax({
+         url: '/start/',
+         type: 'GET',
+         success: function(response){
+          // Perform operation on the return value
+          console.log(response);
+         }
+        });
+      });
+
+      </script>
+
+		<!-- //Necessary-JavaScript-Files-&-Links -->
+</body>
+</html>
